@@ -546,6 +546,10 @@ PrefabInstance:
       value: MainMenu Camera
       objectReference: {fileID: 0}
     - target: {fileID: 2712793570442720699, guid: 8b1bb128ab20f34469cccc14100e3d45, type: 3}
+      propertyPath: orthographic size
+      value: 19.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2712793570442720699, guid: 8b1bb128ab20f34469cccc14100e3d45, type: 3}
       propertyPath: m_BackGroundColor.b
       value: 0.4513617
       objectReference: {fileID: 0}
