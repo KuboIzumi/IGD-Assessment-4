@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 13312, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: Map_Spritesheet_5
+  m_Name: Map_0
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: -1675907375, guid: bbec7f4eb4a132244b44d2b6d421f628, type: 3}
+  m_Sprite: {fileID: -1564731000, guid: 594e99a9d65748645ae7b197d22d42b3, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1

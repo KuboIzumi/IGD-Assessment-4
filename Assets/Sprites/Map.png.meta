@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: bbec7f4eb4a132244b44d2b6d421f628
+guid: 594e99a9d65748645ae7b197d22d42b3
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -48,7 +48,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 126
+  spritePixelsToUnits: 128
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -107,7 +107,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Map_Spritesheet_0
+      name: Map_0
       rect:
         serializedVersion: 2
         x: 0
@@ -121,14 +121,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d9a75fa17d67fcf46ba93c6004cdc9b4
-      internalID: 72386208
+      spriteID: 23e7f59d3cdbb8648b0c5f5112c0527d
+      internalID: -1564731000
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Map_Spritesheet_1
+      name: Map_1
       rect:
         serializedVersion: 2
         x: 128
@@ -142,14 +142,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ab224a565362edb47a23598afd1c1494
-      internalID: -1291236781
+      spriteID: 5a82b55652650794d9e543c3db22ae6a
+      internalID: 615067240
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Map_Spritesheet_2
+      name: Map_2
       rect:
         serializedVersion: 2
         x: 256
@@ -163,14 +163,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: dff70d667786a3e4c84a0d09479e2811
-      internalID: -1562620570
+      spriteID: 3e2c626cd99a9184ea60eabfc2cfbec0
+      internalID: -1685832864
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Map_Spritesheet_3
+      name: Map_3
       rect:
         serializedVersion: 2
         x: 0
@@ -184,14 +184,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f65066e682f002448956653697ec3f3c
-      internalID: 452480594
+      spriteID: ef6f291ebdcb27b4fa5530b058738399
+      internalID: 1906215995
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Map_Spritesheet_4
+      name: Map_4
       rect:
         serializedVersion: 2
         x: 128
@@ -205,14 +205,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9a2d2937fc8a6bd42bbc6864bbddd322
-      internalID: 59906203
+      spriteID: 541b9b41d18d3a14c9e1197174f5ebee
+      internalID: -245568905
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Map_Spritesheet_5
+      name: Map_5
       rect:
         serializedVersion: 2
         x: 256
@@ -226,14 +226,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b12adf6c7a136614d89c13820ce15071
-      internalID: -1675907375
+      spriteID: 443606e0b5009af46b7c491fe6bc1415
+      internalID: 70876607
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Map_Spritesheet_6
+      name: Map_6
       rect:
         serializedVersion: 2
         x: 0
@@ -247,8 +247,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 32f785d6c4819b5438aaa253f2126d75
-      internalID: 1022823475
+      spriteID: dc3f1f63700dc0740ba96e2b6f74c36d
+      internalID: -589941864
       vertices: []
       indices: 
       edges: []
@@ -264,13 +264,13 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Map_Spritesheet_0: 72386208
-      Map_Spritesheet_1: -1291236781
-      Map_Spritesheet_2: -1562620570
-      Map_Spritesheet_3: 452480594
-      Map_Spritesheet_4: 59906203
-      Map_Spritesheet_5: -1675907375
-      Map_Spritesheet_6: 1022823475
+      Map_0: -1564731000
+      Map_1: 615067240
+      Map_2: -1685832864
+      Map_3: 1906215995
+      Map_4: -245568905
+      Map_5: 70876607
+      Map_6: -589941864
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
