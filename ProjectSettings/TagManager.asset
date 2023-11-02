@@ -3,18 +3,23 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - PacStudent
+  - Pellet
+  - Power Cell
+  - Walls
+  - Ghost
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Ghosts
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
+  - PacStudent
+  - Pellets
+  - Power Cell
+  - Walls
   - 
   - 
   - 
