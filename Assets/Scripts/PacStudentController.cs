@@ -6,6 +6,7 @@ using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Tilemaps;
+using static PacStudentController;
 
 public class PacStudentController : MonoBehaviour
 {
@@ -55,8 +56,39 @@ public class PacStudentController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        AnimateSprite();
+        WalkingDirection();
         GetCurrentPos((int)transform.position.x, (int)transform.position.y);
-        Move();
+        StartCoroutine(Move());
+    }
+
+    private void AnimateSprite()
+    {
+        switch (characterDirection)
+        {
+            case MovementDirections.Right:
+                spriteRenderer.flipY = false;
+                transform.localEulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, 0.0f);
+                break;
+
+            case MovementDirections.Up:
+                spriteRenderer.flipY = false;
+                transform.localEulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, 90.0f);
+                break;
+
+            case MovementDirections.Left:
+                spriteRenderer.flipY = true;
+                transform.localEulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, 180.0f);
+                break;
+
+            case MovementDirections.Down:
+                spriteRenderer.flipY = false;
+                transform.localEulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, 270.0f);
+                break;
+
+            default:
+                return;
+        }
     }
 
     private IEnumerator Move()
@@ -78,25 +110,25 @@ public class PacStudentController : MonoBehaviour
         if (Input.GetKey(KeyCode.W))
         {
             characterDirection = MovementDirections.Up;
-            return new Vector2(0f, 1.25f);
+            return new Vector2(transform.position.x, transform.position.y + 1.25f);
         }
         else if (Input.GetKey(KeyCode.A))
         {
             characterDirection = MovementDirections.Left;
-            return new Vector2(-1.25f, 0f);
+            return new Vector2(transform.position.x - 1.25f, transform.position.y);
         }
         else if (Input.GetKey(KeyCode.S))
         {
             characterDirection = MovementDirections.Down;
-            return new Vector2(0f, -1.25f);
+            return new Vector2(transform.position.x, transform.position.y - 1.25f);
         }
         else if (Input.GetKey(KeyCode.D))
         {
             characterDirection = MovementDirections.Right;
-            return new Vector2(1.25f, 0f);
+            return new Vector2(transform.position.x + 1.25f, transform.position.y);
         }
 
-        return new Vector2(0, 0);
+        return new Vector2(transform.position.x, transform.position.y);
     }
 
     public int[] GetCurrentPos(int posX, int posY)

@@ -1965,7 +1965,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: PacFish
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3410660585313739080, guid: d52da3b41a9d3e4469caf8911cd759fe, type: 3}
+    - {fileID: -832373690659926966, guid: d52da3b41a9d3e4469caf8911cd759fe, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
