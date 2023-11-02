@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -16,28 +17,45 @@ public class PacStudentController : MonoBehaviour
     private GameManager gameManager;
 
     public float speed = 5.0f;
+    public float time = 0;
+    public float lerpSpeed = 1;
+    public float elaspedTime;
 
-    private Vector2 startPosition = new(-15.624f, 15.376f);
+    private Vector2 startPosition = new(-15.625f, 15.375f);
 
     public enum MovementDirections { Right, Up, Left, Down }
     public MovementDirections characterDirection = MovementDirections.Right;
 
     int[,] levelMap ={
-    {1,2,2,2,2,2,2,2,2,2,2,2,2,7},
-    {2,5,5,5,5,5,5,5,5,5,5,5,5,4},
-    {2,5,3,4,4,3,5,3,4,4,4,3,5,4},
-    {2,6,4,0,0,4,5,4,0,0,0,4,5,4},
-    {2,5,3,4,4,3,5,3,4,4,4,3,5,3},
-    {2,5,5,5,5,5,5,5,5,5,5,5,5,5},
-    {2,5,3,4,4,3,5,3,3,5,3,4,4,4},
-    {2,5,3,4,4,3,5,4,4,5,3,4,4,3},
-    {2,5,5,5,5,5,5,4,4,5,5,5,5,4},
-    {1,2,2,2,2,1,5,4,3,4,4,3,0,4},
-    {0,0,0,0,0,2,5,4,3,4,4,3,0,3},
-    {0,0,0,0,0,2,5,4,4,0,0,0,0,0},
-    {0,0,0,0,0,2,5,4,4,0,3,4,4,0},
-    {2,2,2,2,2,1,5,3,3,0,4,0,0,0},
-    {0,0,0,0,0,0,5,0,0,0,4,0,0,0},
+    { 1,2,2,2,2,2,2,2,2,2,2,2,2,7,7,2,2,2,2,2,2,2,2,2,2,2,2,1 },
+    { 2,5,5,5,5,5,5,5,5,5,5,5,5,4,4,5,5,5,5,5,5,5,5,5,5,5,5,2 },
+    { 2,5,3,4,4,3,5,3,4,4,4,3,5,4,4,5,3,4,4,4,3,5,3,4,4,3,5,2 },
+    { 2,6,4,0,0,4,5,4,0,0,0,4,5,4,4,5,4,0,0,0,4,5,4,0,0,4,6,2 },
+    { 2,5,3,4,4,3,5,3,4,4,4,3,5,3,3,5,3,4,4,4,3,5,3,4,4,3,5,2 },
+    { 2,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,2 },
+    { 2,5,3,4,4,3,5,3,3,5,3,4,4,4,4,4,4,3,5,3,3,5,3,4,4,3,5,2 },
+    { 2,5,3,4,4,3,5,4,4,5,3,4,4,3,3,4,4,3,5,4,4,5,3,4,4,3,5,2 },
+    { 2,5,5,5,5,5,5,4,4,5,5,5,5,4,4,5,5,5,5,4,4,5,5,5,5,5,5,2 },
+    { 1,2,2,2,2,1,5,4,3,4,4,3,0,4,4,0,3,4,4,3,4,5,1,2,2,2,2,1 },
+    { 0,0,0,0,0,2,5,4,3,4,4,3,0,3,3,0,3,4,4,3,4,5,2,0,0,0,0,0 },
+    { 0,0,0,0,0,2,5,4,4,0,0,0,0,0,0,0,0,0,0,4,4,5,2,0,0,0,0,0 },
+    { 0,0,0,0,0,2,5,4,4,0,3,4,4,0,0,4,4,3,0,4,4,5,2,0,0,0,0,0 },
+    { 2,2,2,2,2,1,5,3,3,0,4,0,0,0,0,0,0,4,0,3,3,5,1,2,2,2,2,2 },
+    { 0,0,0,0,0,0,5,0,0,0,4,0,0,0,0,0,0,4,0,0,0,5,0,0,0,0,0,0 },
+    { 2,2,2,2,2,1,5,3,3,0,4,0,0,0,0,0,0,4,0,3,3,5,1,2,2,2,2,2 },
+    { 0,0,0,0,0,2,5,4,4,0,3,4,4,0,0,4,4,3,0,4,4,5,2,0,0,0,0,0 },
+    { 0,0,0,0,0,2,5,4,4,0,0,0,0,0,0,0,0,0,0,4,4,5,2,0,0,0,0,0 },
+    { 0,0,0,0,0,2,5,4,3,4,4,3,0,3,3,0,3,4,4,3,4,5,2,0,0,0,0,0 },
+    { 1,2,2,2,2,1,5,4,3,4,4,3,0,4,4,0,3,4,4,3,4,5,1,2,2,2,2,1 },
+    { 2,5,5,5,5,5,5,4,4,5,5,5,5,4,4,5,5,5,5,4,4,5,5,5,5,5,5,2 },
+    { 2,5,3,4,4,3,5,4,4,5,3,4,4,3,3,4,4,3,5,4,4,5,3,4,4,3,5,2 },
+    { 2,5,3,4,4,3,5,3,3,5,3,4,4,4,4,4,4,3,5,3,3,5,3,4,4,3,5,2 },
+    { 2,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,2 },
+    { 2,5,3,4,4,3,5,3,4,4,4,3,5,3,3,5,3,4,4,4,3,5,3,4,4,3,5,2 },
+    { 2,6,4,0,0,4,5,4,0,0,0,4,5,4,4,5,4,0,0,0,4,5,4,0,0,4,6,2 },
+    { 2,5,3,4,4,3,5,3,4,4,4,3,5,4,4,5,3,4,4,4,3,5,3,4,4,3,5,2 },
+    { 2,5,5,5,5,5,5,5,5,5,5,5,5,4,4,5,5,5,5,5,5,5,5,5,5,5,5,2 },
+    { 1,2,2,2,2,2,2,2,2,2,2,2,2,7,7,2,2,2,2,2,2,2,2,2,2,2,2,1 },
     };
 
     // Start is called before the first frame update
@@ -56,13 +74,20 @@ public class PacStudentController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        AnimateSprite();
+        SpriteDirection();
+        Debug.Log(transform.position.x);
         WalkingDirection();
+
         GetCurrentPos((int)transform.position.x, (int)transform.position.y);
-        StartCoroutine(Move());
+        if (CanMove())
+        {
+            time += Time.deltaTime;
+            float completePercent = time / lerpSpeed;
+            transform.position = Vector2.Lerp(transform.position, WalkingDirection(), time);
+        }
     }
 
-    private void AnimateSprite()
+    private void SpriteDirection()
     {
         switch (characterDirection)
         {
@@ -91,22 +116,13 @@ public class PacStudentController : MonoBehaviour
         }
     }
 
-    private IEnumerator Move()
+    private void Move()
     {
-        float time = 0;
-        float lerpSpeed = 1;
-        while (time < 1)
-        {
-            transform.position = Vector2.Lerp(transform.position, WalkingDirection(), time);
-            time += Time.deltaTime * lerpSpeed;
-            yield return null;
-        }
-        transform.Translate(new Vector2(speed, 0f) * Time.deltaTime, Space.Self);
+        transform.Translate(new Vector3(speed, 0f, 0f) * Time.deltaTime, Space.Self);
     }
 
     private Vector2 WalkingDirection()
     {
-        
         if (Input.GetKey(KeyCode.W))
         {
             characterDirection = MovementDirections.Up;
@@ -131,9 +147,48 @@ public class PacStudentController : MonoBehaviour
         return new Vector2(transform.position.x, transform.position.y);
     }
 
+    public Boolean CanMove()
+    {
+        int[] currentTile = GetCurrentPos((int)transform.position.x, (int)transform.position.y);
+
+        if (characterDirection == MovementDirections.Right)
+        {
+            if (levelMap[currentTile[0] + 1, currentTile[1]] <= 4 && levelMap[currentTile[0] + 1, currentTile[1]] >= 1)
+            {
+                return false;
+            }
+        }
+        else if (characterDirection == MovementDirections.Left)
+        {
+            if (levelMap[currentTile[0] - 1, currentTile[1]] <= 4 && levelMap[currentTile[0] - 1, currentTile[1]] >= 1)
+            {
+                return false;
+            }
+        }
+        else if (characterDirection == MovementDirections.Up)
+        {
+            if (levelMap[currentTile[0], currentTile[1] + 1] <= 4 && levelMap[currentTile[0], currentTile[1] + 1] >= 1)
+            {
+                return false;
+            }
+        }
+        else if (characterDirection == MovementDirections.Down)
+        {
+            if (levelMap[currentTile[0], currentTile[1] - 1] <= 4 && levelMap[currentTile[0], currentTile[1] - 1] >= 1)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
     public int[] GetCurrentPos(int posX, int posY)
     {
-        int[] array = new int[] { (posX - 23), (posY + 14) };
+        double x = (posX + 16.875) / 1.25;
+        double y = (-1) * (posY - 16.625) / 1.25;
+        int[] array = new int[2] { (int)x, (int)y };
+        array[0] = (int)x;
+        array[1] = (int)y;
         return array;
     }
 
