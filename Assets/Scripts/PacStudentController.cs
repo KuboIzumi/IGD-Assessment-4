@@ -1,16 +1,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Drawing;
 using TMPro;
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.TextCore.Text;
 using UnityEngine.Tilemaps;
-using UnityEngine.UIElements;
-using UnityEngine.WSA;
 using static PacStudentController;
 
 public class PacStudentController : MonoBehaviour
@@ -19,11 +16,11 @@ public class PacStudentController : MonoBehaviour
     private AudioSource audioSource;
 
     private GameManager gameManager;
-
+    public const float unit = 1.25f;
     public float speed = 0.1f;
-    public float time = 0;
-    public float elaspedTime;
-    public int frameCount = 0;
+    public double time = 0;
+    public double movementInteval = 0.5;
+    Vector2 movement;
 
     private Vector2 startPosition = new(-15.625f, 15.375f);
 
@@ -81,18 +78,11 @@ public class PacStudentController : MonoBehaviour
         SpriteDirection();
         Debug.Log(transform.position.x);
         WalkingDirection();
-        frameCount++;
         Debug.Log(CanMove());
         GetCurrentPos((double)transform.position.x, (double)transform.position.y);
-        if (CanMove())
-        {
-            if (frameCount % 60 == 0)
-            {
-                Vector2 movement = WalkingDirection();
-                transform.position = movement;
-            }
-        }
+        Move();
     }
+
 
     private void SpriteDirection()
     {
@@ -128,30 +118,43 @@ public class PacStudentController : MonoBehaviour
         if (Input.GetKey(KeyCode.W))
         {
             characterDirection = MovementDirections.Up;
-            return new Vector2(transform.position.x, transform.position.y + 1.25f);
         }
+
         else if (Input.GetKey(KeyCode.A))
         {
             characterDirection = MovementDirections.Left;
-            return new Vector2(transform.position.x - 1.25f, transform.position.y);
         }
+
         else if (Input.GetKey(KeyCode.S))
         {
             characterDirection = MovementDirections.Down;
-            return new Vector2(transform.position.x, transform.position.y - 1.25f);
         }
+
         else if (Input.GetKey(KeyCode.D))
         {
             characterDirection = MovementDirections.Right;
-            return new Vector2(transform.position.x + 1.25f, transform.position.y);
         }
 
+        switch (characterDirection)
+        {
+            case MovementDirections.Left:
+                return new Vector2(transform.position.x - unit, transform.position.y);
+            case MovementDirections.Right:
+                return new Vector2(transform.position.x + unit, transform.position.y);
+            case MovementDirections.Up:
+                return new Vector2(transform.position.x, transform.position.y + unit);
+            case MovementDirections.Down:
+                return new Vector2(transform.position.x, transform.position.y - unit);
+            default:
+                break;
+        }
         return new Vector2(transform.position.x, transform.position.y);
+
     }
 
     public Boolean CanMove()
     {
-        int[] tile = nextTile();
+        int[] tile = NextTile();
         if (levelMap[tile[0], tile[1]] >= 1 && levelMap[tile[0], tile[1]] <= 4)
         {
             return false;
@@ -159,35 +162,50 @@ public class PacStudentController : MonoBehaviour
         return true;
     }
 
-
-    public int[] nextTile()
+    public int[] NextTile()
     {
         int[] position;
 
         if (characterDirection == MovementDirections.Right)
         {
-            return position = GetCurrentPos((double)transform.position.x + 1.25, (double)transform.position.y);
+            return position = GetCurrentPos((double)transform.position.x + unit, (double)transform.position.y);
         }
         else if (characterDirection == MovementDirections.Left)
         {
-            return position = GetCurrentPos((double)transform.position.x - 1.25, (double)transform.position.y);
+            return position = GetCurrentPos((double)transform.position.x - unit, (double)transform.position.y);
         }
         else if (characterDirection == MovementDirections.Up)
         {
-            return position = GetCurrentPos((double)transform.position.x, (double)transform.position.y + 1.25);
+            return position = GetCurrentPos((double)transform.position.x, (double)transform.position.y + unit);
         }
         else if (characterDirection == MovementDirections.Down)
         {
-            return position = GetCurrentPos((double)transform.position.x, (double)transform.position.y - 1.25);
+            return position = GetCurrentPos((double)transform.position.x, (double)transform.position.y - unit);
         }
         return null;
+    }
+
+    public void Move()
+    {
+        if (CanMove())
+        {
+            startPosition = transform.position;
+            time += Time.deltaTime;
+
+            if (time >= movementInteval)
+            {
+                movement = WalkingDirection();
+                transform.position = movement;
+                time = 0.0f;
+            }
+        }
     }
 
 
     public int[] GetCurrentPos(double posX, double posY)
     {
-        double x = (posX + 16.875) / 1.25;
-        double y = (-1) * (posY - 16.625) / 1.25;
+        double x = (posX + 16.875) / unit;
+        double y = (-1) * (posY - 16.625) / unit;
         int[] array = new int[2] { (int)x, (int)y };
         array[0] = (int)y;
         array[1] = (int)x;
